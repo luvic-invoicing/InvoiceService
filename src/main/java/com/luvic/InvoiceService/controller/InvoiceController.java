@@ -7,6 +7,7 @@ package com.luvic.InvoiceService.controller;
 
 import com.luvic.InvoiceService.model.Invoice;
 import com.luvic.InvoiceService.service.InvoiceService;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -44,5 +45,10 @@ public class InvoiceController {
     @DeleteMapping("/invoice/{id}")
     void delete(@PathVariable Integer id) {
         invoiceService.deleteById(id);
+    }
+    
+    @GetMapping("/invoice/{id}")
+    Optional<Invoice> findById(@PathVariable Integer id) {
+        return invoiceService.findById(id);
     }
 }

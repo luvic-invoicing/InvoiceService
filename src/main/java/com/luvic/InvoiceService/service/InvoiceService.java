@@ -13,5 +13,7 @@ import org.springframework.data.repository.CrudRepository;
  * @author Universal
  */
 public interface InvoiceService extends CrudRepository<Invoice, Integer> {
-    
+    Iterable<Invoice> findBySecuenciaAndStatus(int secuencia, int status);
+    Iterable<Invoice> findBySecuencia(int secuencia);
+    Iterable<Invoice> findByStatus(int status);
 }

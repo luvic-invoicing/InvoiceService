@@ -20,8 +20,17 @@ public class Invoice {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private int Secuencia; //TODO: Should be unique
+    private int secuencia; //TODO: Should be unique
     private String idErp;
+    private int status;
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
 
     public int getId() {
         return id;
@@ -32,11 +41,11 @@ public class Invoice {
     }
 
     public int getSecuencia() {
-        return Secuencia;
+        return secuencia;
     }
 
     public void setSecuencia(int Secuencia) {
-        this.Secuencia = Secuencia;
+        this.secuencia = Secuencia;
     }
 
     public String getIdErp() {
