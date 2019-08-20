@@ -5,10 +5,14 @@
  */
 package com.luvic.InvoiceService.model;
 
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 /**
  *
@@ -23,6 +27,21 @@ public class Invoice {
     private int secuencia; //TODO: Should be unique
     private String idErp;
     private int status;
+    
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<InvoiceLine> lines; 
+
+    public List<InvoiceLine> getLines() {
+        if(lines == null) {
+            lines = ArrayList<InvoiceLine>();
+        }
+        
+        return lines;
+    }
+
+    public void setLines(List<InvoiceLine> lines) {
+        this.lines = lines;
+    }
 
     public int getStatus() {
         return status;
