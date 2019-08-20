@@ -6,9 +6,12 @@
 package com.luvic.InvoiceService.model;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -16,24 +19,206 @@ import javax.persistence.OneToMany;
 
 /**
  *
- * @author Universal
+ * @author Luis Fernando Arce
  */
 @Entity
-public class Invoice {
+public class Invoice { //TODO: Add Validations to TotalAmounts - According to Hacienda - CALL ANOTHER SERVICE FOR THAT???
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private int secuencia; //TODO: Should be unique
+    @Column(unique=true)
+    private int secuencia;
     private String idErp;
-    private int status;
+    @Enumerated
+    private Status status;
+    private String clientName;
+    private String clientEmail;
+    private String clientId;
+    private String clientIdType; //01 Cédula Física, 02 Cédula Jurídica, 03 DIMEX, 04 NITE
+    private double totalSell;
+    private double totalDiscount;
+    private double totalNetSell;
+    private double totalTaxes;
+    private double totalBill;
+    private double totalSellExempt;
+    private String codeSellCondition;
+    private String codePaidMethod1;
+    private String codePaidMethod2;
+    private String codePaidMethod3;
+    private String codePaidMethod4;
+    private Date authorizationDate;
+    private Date registryDate;
+    private String fiscalConsecutive;
+    private String billKey;
+    private boolean isInvoice;
     
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(mappedBy="invoice", cascade = CascadeType.ALL)
     private List<InvoiceLine> lines; 
+    
+    public String getClientName() {
+        return clientName;
+    }
+
+    public void setClientName(String clientName) {
+        this.clientName = clientName;
+    }
+
+    public String getClientEmail() {
+        return clientEmail;
+    }
+
+    public void setClientEmail(String clientEmail) {
+        this.clientEmail = clientEmail;
+    }
+
+    public String getClientId() {
+        return clientId;
+    }
+
+    public void setClientId(String clientId) {
+        this.clientId = clientId;
+    }
+
+    public String getClientIdType() {
+        return clientIdType;
+    }
+
+    public void setClientIdType(String clientIdType) {
+        this.clientIdType = clientIdType;
+    }
+
+    public double getTotalSell() {
+        return totalSell;
+    }
+
+    public void setTotalSell(double totalSell) {
+        this.totalSell = totalSell;
+    }
+
+    public double getTotalDiscount() {
+        return totalDiscount;
+    }
+
+    public void setTotalDiscount(double totalDiscount) {
+        this.totalDiscount = totalDiscount;
+    }
+
+    public double getTotalNetSell() {
+        return totalNetSell;
+    }
+
+    public void setTotalNetSell(double totalNetSell) {
+        this.totalNetSell = totalNetSell;
+    }
+
+    public double getTotalTaxes() {
+        return totalTaxes;
+    }
+
+    public void setTotalTaxes(double totalTaxes) {
+        this.totalTaxes = totalTaxes;
+    }
+
+    public double getTotalBill() {
+        return totalBill;
+    }
+
+    public void setTotalBill(double totalBill) {
+        this.totalBill = totalBill;
+    }
+
+    public double getTotalSellExempt() {
+        return totalSellExempt;
+    }
+
+    public void setTotalSellExempt(double totalSellExempt) {
+        this.totalSellExempt = totalSellExempt;
+    }
+
+    public String getCodeSellCondition() {
+        return codeSellCondition;
+    }
+
+    public void setCodeSellCondition(String codeSellCondition) {
+        this.codeSellCondition = codeSellCondition;
+    }
+
+    public String getCodePaidMethod1() {
+        return codePaidMethod1;
+    }
+
+    public void setCodePaidMethod1(String codePaidMethod1) {
+        this.codePaidMethod1 = codePaidMethod1;
+    }
+
+    public String getCodePaidMethod2() {
+        return codePaidMethod2;
+    }
+
+    public void setCodePaidMethod2(String codePaidMethod2) {
+        this.codePaidMethod2 = codePaidMethod2;
+    }
+
+    public String getCodePaidMethod3() {
+        return codePaidMethod3;
+    }
+
+    public void setCodePaidMethod3(String codePaidMethod3) {
+        this.codePaidMethod3 = codePaidMethod3;
+    }
+
+    public String getCodePaidMethod4() {
+        return codePaidMethod4;
+    }
+
+    public void setCodePaidMethod4(String codePaidMethod4) {
+        this.codePaidMethod4 = codePaidMethod4;
+    }
+
+    public Date getAuthorizationDate() {
+        return authorizationDate;
+    }
+
+    public void setAuthorizationDate(Date authorizationDate) {
+        this.authorizationDate = authorizationDate;
+    }
+
+    public Date getRegistryDate() {
+        return registryDate;
+    }
+
+    public void setRegistryDate(Date registryDate) {
+        this.registryDate = registryDate;
+    }
+
+    public String getFiscalConsecutive() {
+        return fiscalConsecutive;
+    }
+
+    public void setFiscalConsecutive(String fiscalConsecutive) {
+        this.fiscalConsecutive = fiscalConsecutive;
+    }
+
+    public String getBillKey() {
+        return billKey;
+    }
+
+    public void setBillKey(String billKey) {
+        this.billKey = billKey;
+    }
+
+    public boolean isIsInvoice() {
+        return isInvoice;
+    }
+
+    public void setIsInvoice(boolean isInvoice) {
+        this.isInvoice = isInvoice;
+    }
 
     public List<InvoiceLine> getLines() {
         if(lines == null) {
-            lines = ArrayList<InvoiceLine>();
+            lines = new ArrayList<InvoiceLine>();
         }
         
         return lines;
@@ -43,11 +228,11 @@ public class Invoice {
         this.lines = lines;
     }
 
-    public int getStatus() {
+    public Status getStatus() {
         return status;
     }
 
-    public void setStatus(int status) {
+    public void setStatus(Status status) {
         this.status = status;
     }
 

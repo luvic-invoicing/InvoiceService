@@ -9,6 +9,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 /**
  *
@@ -20,6 +22,36 @@ public class InvoiceLineTax {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String code;
+    private double rate;
+    private double amount;
+    
+    @ManyToOne
+    @JoinColumn(name="fk_invoiceLineId")
+    private InvoiceLine invoiceLine;
+    
+    public double getRate() {
+        return rate;
+    }
+
+    public void setRate(double rate) {
+        this.rate = rate;
+    }
+
+    public double getAmount() {
+        return amount;
+    }
+
+    public void setAmount(double amount) {
+        this.amount = amount;
+    }
+
+    public InvoiceLine getInvoiceLine() {
+        return invoiceLine;
+    }
+
+    public void setInvoiceLine(InvoiceLine invoiceLine) {
+        this.invoiceLine = invoiceLine;
+    }
 
     public int getId() {
         return id;
