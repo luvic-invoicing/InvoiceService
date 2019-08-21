@@ -5,6 +5,10 @@
  */
 package com.luvic.InvoiceService.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -23,8 +27,8 @@ public class InvoiceLine { //TODO: Data base object can be different to the cont
     private int id;
     private int lineNumber;
     
+    @JsonBackReference
     @ManyToOne
-    @JoinColumn(name="fk_invoiceId")
     private Invoice invoice;
     
     private String description;
@@ -33,10 +37,15 @@ public class InvoiceLine { //TODO: Data base object can be different to the cont
     private double unitPrice;
     private double amount;
     private double discountAmount;
+    @JsonInclude(Include.NON_NULL)
     private String discountReason;
     private double subTotal;
     private double totalAmount;
-
+    
+    @JsonManagedReference
+    @OneToMany(mappedBy= "invoiceLine", cascade = CascadeType.ALL)
+    private List<InvoiceLineTax> lineTaxes;
+    
     public Invoice getInvoice() {
         return invoice;
     }
@@ -116,10 +125,6 @@ public class InvoiceLine { //TODO: Data base object can be different to the cont
     public void setTotalAmount(double totalAmount) {
         this.totalAmount = totalAmount;
     }
-    
-
-    @OneToMany(mappedBy= "invoiceLine", cascade = CascadeType.ALL)
-    private List<InvoiceLineTax> lineTaxes;
 
     public List<InvoiceLineTax> getLineTaxes() {
         return lineTaxes;

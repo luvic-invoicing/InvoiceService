@@ -5,6 +5,9 @@
  */
 package com.luvic.InvoiceService.model;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -27,11 +30,14 @@ public class Invoice { //TODO: Add Validations to TotalAmounts - According to Ha
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    
     @Column(unique=true)
     private int secuencia;
+    
     private String idErp;
     @Enumerated
-    private Status status;
+    private Status status; //TODO: Verfiy status acording to Database?
+    
     private String clientName;
     private String clientEmail;
     private String clientId;
@@ -42,19 +48,30 @@ public class Invoice { //TODO: Add Validations to TotalAmounts - According to Ha
     private double totalTaxes;
     private double totalBill;
     private double totalSellExempt;
+    @JsonInclude(Include.NON_NULL)
     private String codeSellCondition;
     private String codePaidMethod1;
+    @JsonInclude(Include.NON_NULL)
     private String codePaidMethod2;
+    @JsonInclude(Include.NON_NULL)
     private String codePaidMethod3;
+    @JsonInclude(Include.NON_NULL)
     private String codePaidMethod4;
+    @JsonInclude(Include.NON_NULL)
     private Date authorizationDate;
+    @JsonInclude(Include.NON_NULL)
     private Date registryDate;
     private String fiscalConsecutive;
     private String billKey;
     private boolean isInvoice;
     
+    @JsonManagedReference
     @OneToMany(mappedBy="invoice", cascade = CascadeType.ALL)
     private List<InvoiceLine> lines; 
+    
+    public Invoice() {
+        registryDate = new Date();
+    }
     
     public String getClientName() {
         return clientName;

@@ -5,6 +5,7 @@
  */
 package com.luvic.InvoiceService.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -25,8 +26,8 @@ public class InvoiceLineTax {
     private double rate;
     private double amount;
     
+    @JsonBackReference
     @ManyToOne
-    @JoinColumn(name="fk_invoiceLineId")
     private InvoiceLine invoiceLine;
     
     public double getRate() {
