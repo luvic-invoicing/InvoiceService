@@ -6,6 +6,7 @@
 package com.luvic.InvoiceService.service;
 
 import com.luvic.InvoiceService.model.Invoice;
+import com.luvic.InvoiceService.model.Status;
 import org.springframework.data.repository.CrudRepository;
 
 /**
@@ -13,7 +14,7 @@ import org.springframework.data.repository.CrudRepository;
  * @author Universal
  */
 public interface InvoiceService extends CrudRepository<Invoice, Integer> {
-    Iterable<Invoice> findBySecuenciaAndStatus(int secuencia, int status);
+    Iterable<Invoice> findBySecuenciaAndStatus(int secuencia, Status status);
     Iterable<Invoice> findBySecuencia(int secuencia);
-    Iterable<Invoice> findByStatus(int status);
+    Iterable<Invoice> findByStatus(Status status);
 }

@@ -6,6 +6,7 @@
 package com.luvic.InvoiceService.controller;
 
 import com.luvic.InvoiceService.model.Invoice;
+import com.luvic.InvoiceService.model.Status;
 import com.luvic.InvoiceService.service.InvoiceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,7 +23,7 @@ public class InvoiceCollectionController {
     InvoiceService invoiceService;
     
     @GetMapping("invoice/search")
-    Iterable<Invoice> findByQuery(@RequestParam(value = "secuencia", required = false) Integer secuencia, @RequestParam(value = "status", required = false) Integer status) {
+    Iterable<Invoice> findByQuery(@RequestParam(value = "secuencia", required = false) Integer secuencia, @RequestParam(value = "status", required = false) Status status) {
         if(secuencia != null && status != null) {
             return invoiceService.findBySecuenciaAndStatus(secuencia, status);
         }
