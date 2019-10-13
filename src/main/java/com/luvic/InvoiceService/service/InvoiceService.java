@@ -11,7 +11,7 @@ import org.springframework.data.repository.CrudRepository;
 
 /**
  *
- * @author Universal
+ * @author Luis Arce
  */
 public interface InvoiceService extends CrudRepository<Invoice, Integer> {
     Iterable<Invoice> findBySecuenciaAndStatus(int secuencia, Status status);
