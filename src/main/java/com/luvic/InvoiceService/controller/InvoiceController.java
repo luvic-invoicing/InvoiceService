@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import com.google.common.collect.Lists;
 import com.luvic.InvoiceService.model.CreditMemo;
+import com.luvic.InvoiceService.model.InvoiceLine;
+import com.luvic.InvoiceService.model.InvoiceLineTax;
 import com.luvic.InvoiceService.model.Status;
 import com.luvic.InvoiceService.service.CreditMemoService;
 import java.time.Instant;
@@ -26,6 +28,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
+import java.util.Random;
 
 /**
  *
@@ -44,8 +47,18 @@ public class InvoiceController {
         if (invoiceService.findById(invoice.getId()).isPresent()) {
             invoice.setId(0); //FORWARD invoice if already exist
             invoice.setStatus(Status.CREATED);
-            invoice.setSecuencia((int)Math.random());//TODO: Service that generated Secuence, FiscalSecuence and FiscalKey
+            Random r = new java.util.Random();
+            invoice.setSecuencia(r.nextInt((999 - 500) + 1) + 500);//TODO: Service that generated Secuence, FiscalSecuence and FiscalKey
             invoice.setRegistryDate(new Date());
+            
+            for (InvoiceLine line : invoice.getLines()) {
+                line.setId(0);
+                
+                for(InvoiceLineTax tax : line.getLineTaxes()) {
+                    tax.setId(0);
+                }
+            }
+            
             return invoiceService.save(invoice);
         }
         else {
@@ -77,7 +90,9 @@ public class InvoiceController {
         if (invoiceToRevert.size() == 1 && invoiceToRevert.get(0).getStatus().equals(Status.AUTHORIZED)) {
             //TODO: Service that generated Secuence, FiscalSecuence and FiscalKey
             CreditMemo memo = new CreditMemo();
-            memo.setSecuencia((int)Math.random());
+            
+            Random r = new java.util.Random();
+            memo.setSecuencia(r.nextInt((499 - 400) + 1) + 400); //TODO: Service that generated Secuence, FiscalSecuence and FiscalKey
             memo.setStatus(Status.CREATED);
             memo.setInvoice(invoiceToRevert.get(0));
             memosService.save(memo);
