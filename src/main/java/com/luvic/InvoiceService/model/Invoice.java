@@ -58,6 +58,7 @@ public class Invoice { //TODO: Add Validations to TotalAmounts - According to Ha
     private String fiscalConsecutive;
     private String billKey;
     private boolean isInvoice;
+    private String customerId;
     
     @JsonManagedReference
     @OneToMany(mappedBy="invoice", cascade = CascadeType.ALL)
@@ -269,5 +270,25 @@ public class Invoice { //TODO: Add Validations to TotalAmounts - According to Ha
 
     public void setIdErp(String idErp) {
         this.idErp = idErp;
+    }
+
+    public boolean isInvoice()
+    {
+        return isInvoice;
+    }
+
+    public void setInvoice( boolean invoice )
+    {
+        isInvoice = invoice;
+    }
+
+    public String getCustomerId()
+    {
+        return customerId;
+    }
+
+    public void setCustomerId( String customerId )
+    {
+        this.customerId = customerId;
     }
 }

@@ -6,10 +6,8 @@
 package com.luvic.InvoiceService.controller;
 
 import com.luvic.InvoiceService.model.Invoice;
-import com.luvic.InvoiceService.model.InvoiceCollection;
 import com.luvic.InvoiceService.model.Status;
 import com.luvic.InvoiceService.service.InvoiceService;
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
