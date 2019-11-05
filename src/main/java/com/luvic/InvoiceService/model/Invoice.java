@@ -59,6 +59,7 @@ public class Invoice { //TODO: Add Validations to TotalAmounts - According to Ha
     private String billKey;
     private boolean isInvoice;
     private String customerId;
+    private Currency currency;
     
     @JsonManagedReference
     @OneToMany(mappedBy="invoice", cascade = CascadeType.ALL)
@@ -290,5 +291,15 @@ public class Invoice { //TODO: Add Validations to TotalAmounts - According to Ha
     public void setCustomerId( String customerId )
     {
         this.customerId = customerId;
+    }
+
+    public Currency getCurrency()
+    {
+        return currency;
+    }
+
+    public void setCurrency( Currency currency )
+    {
+        this.currency = currency;
     }
 }
