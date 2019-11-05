@@ -60,7 +60,7 @@ public class Invoice { //TODO: Add Validations to TotalAmounts - According to Ha
     private boolean isInvoice;
     private String customerId;
     private String code;
-    private double exchange;
+    private Double exchange;
     private String customerType;
     
     @JsonManagedReference
@@ -315,12 +315,12 @@ public class Invoice { //TODO: Add Validations to TotalAmounts - According to Ha
         this.code = code;
     }
 
-    public double getExchange()
+    public Double getExchange()
     {
         return exchange;
     }
 
-    public void setExchange( double exchange )
+    public void setExchange( Double exchange )
     {
         this.exchange = exchange;
     }
