@@ -135,12 +135,11 @@ public class InvoiceController {
 
         try
         {
-            URI uri = new URI( "http://f7ce6d77.ngrok.io/creditMemo/" + secuencia );
-            result = restTemplate.postForEntity( uri, null, CreditMemoReserve.class );
+            result = restTemplate.getForEntity( "http://f7ce6d77.ngrok.io/creditMemo/" + secuencia, CreditMemoReserve.class );
         }
         catch (Exception e )
         {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
         
         return result.getBody();
