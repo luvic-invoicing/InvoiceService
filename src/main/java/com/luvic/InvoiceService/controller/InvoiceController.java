@@ -93,7 +93,7 @@ public class InvoiceController {
             CreditMemoReserve reserve = reserveCMSecuence(secuencia);
             
             if (reserve == null) {
-                throw new Exception("Invoices does not exist or it is not authorized");
+                throw new Exception("Problems to reserve CM secuence");
             }
             
             Random r = new java.util.Random();
@@ -131,18 +131,17 @@ public class InvoiceController {
     CreditMemoReserve reserveCMSecuence(int secuencia) {
         RestTemplate restTemplate = new RestTemplate();
 
-        ResponseEntity<CreditMemoReserve> result = null;
-
         try
         {
-            result = restTemplate.getForEntity( "http://f7ce6d77.ngrok.io/creditMemo/" + secuencia, CreditMemoReserve.class );
+            ResponseEntity<CreditMemoReserve> result = restTemplate.getForEntity( "http://f7ce6d77.ngrok.io/creditMemo/" + secuencia, CreditMemoReserve.class );
+            
+            return result.getBody();
         }
         catch (Exception e )
         {
             System.out.println(e.getMessage());
+            return null;
         }
-        
-        return result.getBody();
     }
     
     class CreditMemoReserve {
