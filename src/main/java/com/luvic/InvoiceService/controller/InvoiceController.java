@@ -93,7 +93,7 @@ public class InvoiceController {
             CreditMemoReserve reserve = reserveCMSecuence(secuencia);
             
             if (reserve == null) {
-                throw new Exception("Problems to reserve CM secuence");
+                throw new Exception("Problems to reserve CM secuence 2");
             }
             
             Random r = new java.util.Random();
