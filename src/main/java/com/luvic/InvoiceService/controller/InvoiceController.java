@@ -5,7 +5,8 @@
  */
 package com.luvic.InvoiceService.controller;
 
-import com.luvic.InvoiceService.model.Invoice;
+import com.luvic.InvoiceService.model.*;
+import com.luvic.InvoiceService.service.ILocationRepository;
 import com.luvic.InvoiceService.service.InvoiceService;
 import java.util.List;
 import java.util.Optional;
@@ -18,10 +19,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import com.google.common.collect.Lists;
-import com.luvic.InvoiceService.model.CreditMemo;
-import com.luvic.InvoiceService.model.InvoiceLine;
-import com.luvic.InvoiceService.model.InvoiceLineTax;
-import com.luvic.InvoiceService.model.Status;
 import com.luvic.InvoiceService.service.CreditMemoService;
 import java.util.Date;
 import java.util.Random;
@@ -37,6 +34,9 @@ public class InvoiceController {
     InvoiceService invoiceService;
     @Autowired
     CreditMemoService memosService;
+
+    @Autowired
+    ILocationRepository iLocationRepository;
     
     @PostMapping("/invoice")
     Invoice create(@RequestBody Invoice invoice) {
@@ -108,52 +108,10 @@ public class InvoiceController {
     Optional<CreditMemo> findMemoById(@PathVariable Integer id) {
         return memosService.findById(id);
     }
-}
 
-class Booking {
-    private String orderNumber;
-    private String status;
-    private int supplierId;
-    private String supplierName;
-    private String supplierAlias;
-    
-    public String getOrderNumber() {
-        return orderNumber;
-    }
 
-    public void setOrderNumber(String orderNumber) {
-        this.orderNumber = orderNumber;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public int getSupplierId() {
-        return supplierId;
-    }
-
-    public void setSupplierId(int supplierId) {
-        this.supplierId = supplierId;
-    }
-
-    public String getSupplierName() {
-        return supplierName;
-    }
-
-    public void setSupplierName(String supplierName) {
-        this.supplierName = supplierName;
-    }
-
-    public String getSupplierAlias() {
-        return supplierAlias;
-    }
-
-    public void setSupplierAlias(String supplierAlias) {
-        this.supplierAlias = supplierAlias;
+    @GetMapping("/invoice/location/{supplierId}")
+    Location findBySupplierId(@PathVariable Integer supplierId) {
+        return iLocationRepository.findBySupplierId(supplierId);
     }
 }
