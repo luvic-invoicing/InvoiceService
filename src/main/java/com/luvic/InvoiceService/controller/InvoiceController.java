@@ -84,11 +84,9 @@ public class InvoiceController {
         List<Invoice> invoiceToRevert = Lists.newArrayList(invoiceService.findBySecuencia(secuencia));
 
         if (invoiceToRevert.size() == 1 && invoiceToRevert.get(0).getStatus().equals(Status.AUTHORIZED)) {
-            //TODO: Service that generated Secuence, FiscalSecuence and FiscalKey
             CreditMemo memo = new CreditMemo();
             
             Random r = new java.util.Random();
-            memo.setSecuencia(r.nextInt((499 - 400) + 1) + 400); //TODO: Service that generated Secuence, FiscalSecuence and FiscalKey
             memo.setStatus(Status.CREATED);
             memo.setInvoice(invoiceToRevert.get(0));
             memosService.save(memo);
