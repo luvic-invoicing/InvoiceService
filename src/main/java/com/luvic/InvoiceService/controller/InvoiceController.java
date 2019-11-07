@@ -20,8 +20,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import com.google.common.collect.Lists;
 import com.luvic.InvoiceService.service.CreditMemoService;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.Date;
 import java.util.Random;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.RestTemplate;
 
 /**
  *
@@ -86,9 +90,18 @@ public class InvoiceController {
         if (invoiceToRevert.size() == 1 && invoiceToRevert.get(0).getStatus().equals(Status.AUTHORIZED)) {
             CreditMemo memo = new CreditMemo();
             
+            CreditMemoReserve reserve = reserveCMSecuence(secuencia);
+            
+            if (reserve == null) {
+                throw new Exception("Invoices does not exist or it is not authorized");
+            }
+            
             Random r = new java.util.Random();
             memo.setStatus(Status.CREATED);
             memo.setInvoice(invoiceToRevert.get(0));
+            memo.setBillKey(reserve.getBillKey());
+            memo.setFiscalConsecutive(reserve.getFiscalConsecutive());
+            memo.setSecuencia(reserve.getSecuencia());
             memosService.save(memo);
         
             invoiceToRevert.get(0).setStatus(Status.REVERTED);
@@ -113,5 +126,64 @@ public class InvoiceController {
     @GetMapping("/invoice/location/{supplierId}")
     Location findBySupplierId(@PathVariable Integer supplierId) {
         return iLocationRepository.findBySupplierId(supplierId);
+    }
+    
+    CreditMemoReserve reserveCMSecuence(int secuencia) {
+        RestTemplate restTemplate = new RestTemplate();
+
+        ResponseEntity<CreditMemoReserve> result = null;
+
+        try
+        {
+            URI uri = new URI( "http://f7ce6d77.ngrok.io/creditMemo/" + secuencia );
+            result = restTemplate.postForEntity( uri, null, CreditMemoReserve.class );
+        }
+        catch (Exception e )
+        {
+            e.printStackTrace();
+        }
+        
+        return result.getBody();
+    }
+    
+    class CreditMemoReserve {
+        private int secuencia;
+
+        private Date authorizationDate;
+
+        private String fiscalConsecutive;
+        private String billKey;
+
+        public int getSecuencia() {
+            return secuencia;
+        }
+
+        public void setSecuencia(int secuencia) {
+            this.secuencia = secuencia;
+        }
+
+        public Date getAuthorizationDate() {
+            return authorizationDate;
+        }
+
+        public void setAuthorizationDate(Date authorizationDate) {
+            this.authorizationDate = authorizationDate;
+        }
+
+        public String getFiscalConsecutive() {
+            return fiscalConsecutive;
+        }
+
+        public void setFiscalConsecutive(String fiscalConsecutive) {
+            this.fiscalConsecutive = fiscalConsecutive;
+        }
+
+        public String getBillKey() {
+            return billKey;
+        }
+
+        public void setBillKey(String billKey) {
+            this.billKey = billKey;
+        }
     }
 }
