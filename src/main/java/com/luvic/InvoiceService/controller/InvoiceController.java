@@ -133,7 +133,7 @@ public class InvoiceController {
 
         try
         {
-            ResponseEntity<CreditMemoReserve> result = restTemplate.getForEntity( "http://f7ce6d77.ngrok.io/creditMemo/" + secuencia, CreditMemoReserve.class );
+            ResponseEntity<CreditMemoReserve> result = restTemplate.getForEntity( "http://e26a0f9d.ngrok.io/creditMemo/" + secuencia, CreditMemoReserve.class );
             
             return result.getBody();
         }
