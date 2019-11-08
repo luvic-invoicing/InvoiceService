@@ -76,6 +76,11 @@ public class InvoiceController {
         return memosService.findAll();
     }
     
+    @PutMapping("/creditmemo")
+    CreditMemo update(@RequestBody CreditMemo creditMemo) {
+        return memosService.save(creditMemo);
+    }
+    
     @PutMapping("/invoice")
     Invoice update(@RequestBody Invoice invoice) {
         return invoiceService.save(invoice);
