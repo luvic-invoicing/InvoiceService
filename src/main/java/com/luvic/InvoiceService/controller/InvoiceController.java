@@ -45,10 +45,17 @@ public class InvoiceController {
     @PostMapping("/invoice")
     Invoice create(@RequestBody Invoice invoice) {
         if (invoiceService.findById(invoice.getId()).isPresent()) {
+            //Apply forward to original invoice
+            Invoice setForward = invoiceService.findById(invoice.getId()).get();
+            setForward.setStatus(Status.FORWARDED);
+            invoiceService.save(setForward);
+            
+            ForwardInvoiceReserve forwardReserve = reserveForwardSecuence(invoice.getId());
+            invoice.setSecuencia(forwardReserve.getSecuencia());
+            invoice.setBillKey(forwardReserve.getBillKey());
+            invoice.setFiscalConsecutive(forwardReserve.getFiscalConsecutive());
             invoice.setId(0); //FORWARD invoice if already exist
             invoice.setStatus(Status.CREATED);
-            Random r = new java.util.Random();
-            invoice.setSecuencia(r.nextInt((999 - 500) + 1) + 500);//TODO: Service that generated Secuence, FiscalSecuence and FiscalKey
             invoice.setRegistryDate(new Date());
             
             for (InvoiceLine line : invoice.getLines()) {
@@ -101,7 +108,6 @@ public class InvoiceController {
                 throw new Exception("Problems to reserve CM secuence 2");
             }
             
-            Random r = new java.util.Random();
             memo.setStatus(Status.CREATED);
             memo.setInvoice(invoiceToRevert.get(0));
             memo.setBillKey(reserve.getBillKey());
@@ -138,7 +144,23 @@ public class InvoiceController {
 
         try
         {
-            ResponseEntity<CreditMemoReserve> result = restTemplate.getForEntity( "http://f733877e.ngrok.io/creditMemo/" + secuencia, CreditMemoReserve.class );
+            ResponseEntity<CreditMemoReserve> result = restTemplate.getForEntity( "http://c46445b6.ngrok.io/creditMemo/" + secuencia, CreditMemoReserve.class );
+            
+            return result.getBody();
+        }
+        catch (Exception e )
+        {
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+    
+    ForwardInvoiceReserve reserveForwardSecuence(int secuencia) {
+        RestTemplate restTemplate = new RestTemplate();
+
+        try
+        {
+            ResponseEntity<ForwardInvoiceReserve> result = restTemplate.getForEntity( "http://c46445b6.ngrok.io/forward/" + secuencia, ForwardInvoiceReserve.class );
             
             return result.getBody();
         }
