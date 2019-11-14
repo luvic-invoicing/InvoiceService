@@ -50,7 +50,7 @@ public class InvoiceController {
             setForward.setStatus(Status.FORWARDED);
             invoiceService.save(setForward);
             
-            ForwardInvoiceReserve forwardReserve = reserveForwardSecuence(invoice.getId());
+            ForwardInvoiceReserve forwardReserve = reserveForwardSecuence(invoice.getSecuencia());
             invoice.setSecuencia(forwardReserve.getSecuencia());
             invoice.setBillKey(forwardReserve.getBillKey());
             invoice.setFiscalConsecutive(forwardReserve.getFiscalConsecutive());
