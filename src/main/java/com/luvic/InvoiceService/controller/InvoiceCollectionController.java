@@ -36,4 +36,12 @@ public class InvoiceCollectionController {
         else
             return invoiceService.findAll();
     }
+
+
+    @GetMapping( value = "/ping" )
+    public String ping()
+    {
+        String response = "pong";
+        return response;
+    }
 }
