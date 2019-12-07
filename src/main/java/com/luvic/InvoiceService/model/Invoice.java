@@ -24,8 +24,7 @@ public class Invoice { //TODO: Add Validations to TotalAmounts - According to Ha
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    
-    @Column(unique=true)
+
     private int secuencia;
     
     private String idErp;
@@ -324,4 +323,5 @@ public class Invoice { //TODO: Add Validations to TotalAmounts - According to Ha
     {
         this.exchange = exchange;
     }
+
 }

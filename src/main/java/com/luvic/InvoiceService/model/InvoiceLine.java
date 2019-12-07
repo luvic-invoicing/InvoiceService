@@ -34,6 +34,7 @@ public class InvoiceLine { //TODO: Data base object can be different to the cont
     private String discountReason;
     private double subTotal;
     private double totalAmount;
+    private String codigoExoneracion;
     
     @JsonManagedReference
     @OneToMany(mappedBy= "invoiceLine", cascade = CascadeType.ALL)
@@ -141,5 +142,15 @@ public class InvoiceLine { //TODO: Data base object can be different to the cont
 
     public void setLineNumber(int lineNumber) {
         this.lineNumber = lineNumber;
+    }
+
+    public String getCodigoExoneracion()
+    {
+        return codigoExoneracion;
+    }
+
+    public void setCodigoExoneracion( String codigoExoneracion )
+    {
+        this.codigoExoneracion = codigoExoneracion;
     }
 }
