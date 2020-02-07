@@ -251,6 +251,18 @@ public class Invoice { //TODO: Add Validations to TotalAmounts - According to Ha
         this.lines = lines;
     }
 
+    public List<InvoiceOtherCharges> getInvoiceOtherCharges() {
+        if(invoiceOtherCharges == null) {
+            invoiceOtherCharges = new ArrayList<InvoiceOtherCharges>();
+        }
+
+        return invoiceOtherCharges;
+    }
+
+    public void setInvoiceOtherCharges(List<InvoiceOtherCharges> invoiceOtherCharges) {
+        this.invoiceOtherCharges = invoiceOtherCharges;
+    }
+
     public Status getStatus() {
         return status;
     }
