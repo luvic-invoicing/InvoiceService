@@ -62,6 +62,7 @@ public class Invoice { //TODO: Add Validations to TotalAmounts - According to Ha
     private Double exchange;
     private String customerType;
     private Integer supplierId;
+    private String applicationType;
     
     @JsonManagedReference
     @OneToMany(mappedBy="invoice", cascade = CascadeType.ALL)
@@ -333,5 +334,15 @@ public class Invoice { //TODO: Add Validations to TotalAmounts - According to Ha
     public void setSupplierId( Integer supplierId )
     {
         this.supplierId = supplierId;
+    }
+
+    public String getApplicationType()
+    {
+        return applicationType;
+    }
+
+    public void setApplicationType( String applicationType )
+    {
+        this.applicationType = applicationType;
     }
 }
