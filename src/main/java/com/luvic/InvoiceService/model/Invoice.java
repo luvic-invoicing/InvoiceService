@@ -8,6 +8,9 @@ package com.luvic.InvoiceService.model;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -66,7 +69,12 @@ public class Invoice { //TODO: Add Validations to TotalAmounts - According to Ha
     
     @JsonManagedReference
     @OneToMany(mappedBy="invoice", cascade = CascadeType.ALL)
-    private List<InvoiceLine> lines; 
+    private List<InvoiceLine> lines;
+
+    @JsonManagedReference
+    @OneToMany( mappedBy = "invoice", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER )
+    @Fetch( value = FetchMode.SUBSELECT )
+    private List<InvoiceOtherCharges> invoiceOtherCharges = new ArrayList<>();
     
     public Invoice() {
         registryDate = new Date();
@@ -242,6 +250,18 @@ public class Invoice { //TODO: Add Validations to TotalAmounts - According to Ha
 
     public void setLines(List<InvoiceLine> lines) {
         this.lines = lines;
+    }
+
+    public List<InvoiceOtherCharges> getInvoiceOtherCharges() {
+        if(invoiceOtherCharges == null) {
+            invoiceOtherCharges = new ArrayList<InvoiceOtherCharges>();
+        }
+
+        return invoiceOtherCharges;
+    }
+
+    public void setInvoiceOtherCharges(List<InvoiceOtherCharges> invoiceOtherCharges) {
+        this.invoiceOtherCharges = invoiceOtherCharges;
     }
 
     public Status getStatus() {
