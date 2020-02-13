@@ -63,7 +63,7 @@ public class Invoice { //TODO: Add Validations to TotalAmounts - According to Ha
     private String customerId;
     private String code;
     private Double exchange;
-    private String customerType;
+    private String source;
     private Integer supplierId;
     private String applicationType;
     
@@ -316,14 +316,14 @@ public class Invoice { //TODO: Add Validations to TotalAmounts - According to Ha
         this.customerId = customerId;
     }
 
-    public String getCustomerType()
+    public String getSource()
     {
-        return customerType;
+        return source;
     }
 
-    public void setCustomerType( String customerType )
+    public void setSource( String source )
     {
-        this.customerType = customerType;
+        this.source = source;
     }
 
     public String getCode()
