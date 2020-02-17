@@ -8,9 +8,9 @@ package com.luvic.InvoiceService.model;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.luvic.InvoiceService.enumerations.DocumentType;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -66,6 +66,9 @@ public class Invoice { //TODO: Add Validations to TotalAmounts - According to Ha
     private String source;
     private Integer supplierId;
     private String applicationType;
+
+    @Enumerated
+    private DocumentType documentType;
     
     @JsonManagedReference
     @OneToMany(mappedBy="invoice", cascade = CascadeType.ALL)
@@ -364,5 +367,15 @@ public class Invoice { //TODO: Add Validations to TotalAmounts - According to Ha
     public void setApplicationType( String applicationType )
     {
         this.applicationType = applicationType;
+    }
+
+    public DocumentType getDocumentType()
+    {
+        return documentType;
+    }
+
+    public void setDocumentType( DocumentType documentType )
+    {
+        this.documentType = documentType;
     }
 }
