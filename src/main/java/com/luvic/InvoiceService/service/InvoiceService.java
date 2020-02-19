@@ -17,4 +17,5 @@ public interface InvoiceService extends CrudRepository<Invoice, Integer> {
     Iterable<Invoice> findBySecuenciaAndStatus(int secuencia, Status status);
     Iterable<Invoice> findBySecuencia(int secuencia);
     Iterable<Invoice> findByStatus(Status status);
+    Invoice findByBillKey(String billKey);
 }
